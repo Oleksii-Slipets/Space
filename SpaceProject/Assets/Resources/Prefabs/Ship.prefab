@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11463238}
   - 54: {fileID: 5446998}
   - 136: {fileID: 13684776}
+  - 114: {fileID: 11491532}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -176,6 +177,19 @@ MonoBehaviour:
   particleSystemList:
   - {fileID: 19863238}
   _commonSpeed: 20
+--- !u!114 &11491532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c4929b94b3d4d4dabfa35f2d118491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapSprite: {fileID: 21300000, guid: 980e0ac8c2f350e46b385bd2893f3931, type: 3}
+  mapSpriteLayerName: MapSprite
 --- !u!136 &13684776
 CapsuleCollider:
   m_ObjectHideFlags: 1

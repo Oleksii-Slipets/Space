@@ -11,7 +11,8 @@ public class Controller : MonoBehaviour
 		{
 			RaycastHit hit;            
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out hit, 100f)) 
+			LayerMask layerMask = ~(1 << LayerMask.NameToLayer (MinimapManager.GetInstance().mapSpriteLayerName));
+			if (Physics.Raycast(ray, out hit, 100f, layerMask)) 
 			{
 				Ship newShip = hit.collider.GetComponent<Ship>();
 				if(newShip != null)
@@ -27,7 +28,8 @@ public class Controller : MonoBehaviour
 		{
 			RaycastHit hit;            
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out hit, 100f)) 
+			LayerMask layerMask = ~(1 << LayerMask.NameToLayer (MinimapManager.GetInstance().mapSpriteLayerName));
+			if (Physics.Raycast(ray, out hit, 100f, layerMask)) 
 			{
 				if(hit.collider.name == "Floor")
 				{
