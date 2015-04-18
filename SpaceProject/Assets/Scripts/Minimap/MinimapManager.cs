@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -9,31 +10,35 @@ public class MinimapManager : MonoBehaviour
 {
 	public enum MinimapObjectType {Ship, Planet};
 
-	public enum MinimapState { Expand, Closed };
+	public enum MapState { MiniMap, FullScreenMap, NoMap };
+	private MapState _mapState = MapState.MiniMap;
 
-	[System.Serializable] public class MinimapObjectProperties
+	[System.Serializable] public class MapObjectProperties
 	{
 		public MinimapObjectType type;
 		public Sprite sprite;
 	}
 
-	[SerializeField] public Sprite maskSprite;
+	[SerializeField] public List<MapObjectProperties> mapObjectList;
 	[SerializeField] public Sprite selectedSprite;
 
-	[SerializeField] public RectTransform minimapRectTransform;
-	[SerializeField] public List<MinimapObjectProperties> minimapObjectList;
-	[SerializeField] public string mapSpriteLayerName = "MapSprite";
-	[SerializeField] public int sizeMultiplier = 10;
-
 	[SerializeField] public GameObject mapFullScreen;
-	[SerializeField] public RawImage mapFullScreenImage;
-
 	[SerializeField] public GameObject mapMini;
 
-	private RenderTexture _renderTexture;
-	private Camera _minimapCamera;
+	[SerializeField] public RawImage mapFullScreenImage;
+	[SerializeField] public RawImage mapMiniImage;
+	
+	[SerializeField] public RectTransform mapMiniRectTransform;
+	
+	[SerializeField] public int mapIconSize = 10;
+	[SerializeField] public float minimapSize = 0.2f;
 
+	[HideInInspector] public List<DisplayOnMap> displayOnMapObjectList;
 	private DisplayOnMap _selectedObject = null;
+
+	private RenderTexture _renderTexture;
+
+	private Camera _mapCamera;
 
 	private static MinimapManager _instance;
 
@@ -44,27 +49,25 @@ public class MinimapManager : MonoBehaviour
 
 	private void Start()
 	{
-		CreateMinimapCamera();
-		_renderTexture = new RenderTexture((int)_minimapCamera.pixelWidth, (int)_minimapCamera.pixelHeight, 0);
-		_minimapCamera.targetTexture = _renderTexture;
+		CreateMapCamera();
+		_renderTexture = new RenderTexture((int)_mapCamera.pixelWidth, (int)_mapCamera.pixelHeight, 0);
+		_mapCamera.targetTexture = _renderTexture;
 
-		minimapRectTransform.sizeDelta = new Vector2( _renderTexture.width/3, _renderTexture.height/3); 
-		minimapRectTransform.GetComponent<RawImage>().texture = _renderTexture;
+		mapMiniRectTransform.sizeDelta = new Vector2( _renderTexture.width * minimapSize, _renderTexture.height * minimapSize); 
+
+		mapMiniImage.texture = _renderTexture;
 		mapFullScreenImage.texture = _renderTexture;
 
-
+		SetMapState(MapState.MiniMap);
 	}
 
 	private void Update()
 	{
-		if(Input.GetKeyUp(KeyCode.E))
+		if(Input.GetKeyUp(KeyCode.M))
 		{
-			ExpandMap();
+			ChangeMapState();
 		}
-		if(Input.GetKeyUp(KeyCode.C))
-		{
-			CloseMap();
-		}
+
 	}
 
 	public static MinimapManager GetInstance()
@@ -73,25 +76,24 @@ public class MinimapManager : MonoBehaviour
 	}
 
 
-	private void CreateMinimapCamera()
+	private void CreateMapCamera()
 	{
-		GameObject minimapCameraObject = new GameObject("MinimapCamera");
+		GameObject minimapCameraObject = new GameObject("MapCamera");
 		minimapCameraObject.transform.position = Vector3.up * 100;
 		minimapCameraObject.transform.Rotate(90, 0, 0);
-		_minimapCamera = minimapCameraObject.AddComponent<Camera>();
-		_minimapCamera.orthographic = true;
-		_minimapCamera.orthographicSize = 100;
-		_minimapCamera.cullingMask = (1 << LayerMask.NameToLayer(mapSpriteLayerName));
+		_mapCamera = minimapCameraObject.AddComponent<Camera>();
+		_mapCamera.orthographic = true;
+		_mapCamera.orthographicSize = 100;
+		_mapCamera.cullingMask = (1 << LayerMask.NameToLayer(StaticVariables.mapSpriteLayerName));
 	}
 
 	public void OnClickMinimap(Vector2 clickPosition)
 	{
 
 		print("OnClickMinimap = " + clickPosition);
-		LayerMask layerMask = 1 << LayerMask.NameToLayer (mapSpriteLayerName);
+		LayerMask layerMask = 1 << LayerMask.NameToLayer (StaticVariables.mapSpriteLayerName);
 		RaycastHit hit;            
-//		Ray ray = _minimapCamera.ScreenPointToRay(new Vector3(clickPosition.x, clickPosition.y, 0));
-		Ray ray = _minimapCamera.ScreenPointToRay(Input.mousePosition);
+		Ray ray = _mapCamera.ScreenPointToRay(new Vector3(clickPosition.x, clickPosition.y, 0));
 		print(Input.mousePosition);
 
 		if (Physics.Raycast(ray, out hit, 1000f, layerMask)) 
@@ -107,23 +109,46 @@ public class MinimapManager : MonoBehaviour
 				_selectedObject.SetSelected(true);
 				print (objectDisplayOnMap.type.ToString());
 			}
-
-
 		}
-
 
 	}
 
-	public void ExpandMap()
+	public void ChangeMapState()
 	{
-		mapFullScreen.SetActive(true);
-		mapMini.SetActive(false);
+		int nextStateNumber = (int)_mapState + 1;
+		if(nextStateNumber >= Enum.GetNames(typeof(MapState)).Length)
+		{
+			nextStateNumber = 0;
+		}
+		
+		SetMapState((MapState)nextStateNumber);
 	}
 
 	public void CloseMap()
 	{
 		mapFullScreen.SetActive(false);
 		mapMini.SetActive(true);
+	}
+
+	private void SetMapState(MapState newMapState)
+	{
+		_mapState = newMapState;
+
+		switch (_mapState)
+		{
+			case MapState.FullScreenMap:
+				mapFullScreen.SetActive(true);
+				mapMini.SetActive(false);
+				break;
+			case MapState.MiniMap:
+				mapFullScreen.SetActive(false);
+				mapMini.SetActive(true);
+				break;
+			case MapState.NoMap:
+				mapFullScreen.SetActive(false);
+				mapMini.SetActive(false);
+				break;
+		}
 	}
 
 }

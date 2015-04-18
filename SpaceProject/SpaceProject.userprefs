@@ -1,20 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Minimap\MinimapManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Controller.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Minimap\MinimapManager.cs" Line="106" Column="42" />
-      <File FileName="..\..\..\UnityProjects\MinimapTest\Assets\Scripts\Minimap\Core\MController.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\UnityProjects\MinimapTest\Assets\Scripts\Minimap\Core\MModel.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\UnityProjects\MinimapTest\Assets\Scripts\Minimap\Interaction\MInteractionType.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\UnityProjects\MinimapTest\Assets\Scripts\Minimap\Core\MMapBase.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\UnityProjects\MinimapTest\Assets\Scripts\Minimap\Core\MViewRaster.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\UnityProjects\MinimapTest\Assets\Scripts\Minimap\Core\MViewRT.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\UnityProjects\MinimapTest\Assets\Scripts\Minimap\Objects\MObject.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\UnityProjects\MinimapTest\Assets\Scripts\Minimap\Core\MActor.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Minimap\DisplayOnMap.cs" Line="27" Column="35" />
+      <File FileName="Assets\Scripts\Minimap\DisplayOnMap.cs" Line="21" Column="59" />
+      <File FileName="Assets\Scripts\Minimap\MinimapManager.cs" Line="60" Column="3" />
       <File FileName="Assets\Scripts\Minimap\MinimapPanel.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Planet.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Minimap\Editor\MapLayers.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Controller.cs" Line="14" Column="92" />
+      <File FileName="Assets\Scripts\Minimap\StaticVariables.cs" Line="7" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

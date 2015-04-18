@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Minimap\DisplayOnMap.cs" />
      <Compile Include="Assets\Scripts\Minimap\MinimapManager.cs" />
      <Compile Include="Assets\Scripts\Minimap\MinimapPanel.cs" />
+     <Compile Include="Assets\Scripts\Minimap\StaticVariables.cs" />
      <Compile Include="Assets\Scripts\Planet.cs" />
      <Compile Include="Assets\Scripts\Ship.cs" />
  <Reference Include="UnityEngine.UI">

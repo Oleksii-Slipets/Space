@@ -393,7 +393,7 @@ GameObject:
   - 222: {fileID: 612660252}
   - 114: {fileID: 612660251}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2034,66 +2034,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
---- !u!1 &1041757480
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1041757481}
-  - 20: {fileID: 1041757485}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1041757481
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1041757480}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
---- !u!20 &1041757485
-Camera:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1041757480}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: .300000012
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: 200
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 256
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 2ef2f2137c08e694e9d5614542ae6338, type: 2}
-  m_TargetDisplay: 0
-  m_HDR: 0
-  m_OcclusionCulling: 0
-  m_StereoConvergence: 10
-  m_StereoSeparation: .0219999999
 --- !u!1 &1122425927
 GameObject:
   m_ObjectHideFlags: 0
@@ -3372,19 +3312,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37af701c5d5307b47b0ce6e0da320fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maskSprite: {fileID: 21300000, guid: 1f4430be4432ff44c9399d6686025600, type: 3}
-  selectedSprite: {fileID: 21300000, guid: b5e8e78fd544225429dfade1a03906d4, type: 3}
-  minimapRectTransform: {fileID: 2059437552}
-  minimapObjectList:
+  mapObjectList:
   - type: 0
     sprite: {fileID: 21300000, guid: cfc506c4c7581c945b3905e5dabc2e26, type: 3}
   - type: 1
     sprite: {fileID: 21300000, guid: e845e43f01c651c4ba7634d9f37a8deb, type: 3}
-  mapSpriteLayerName: MapSprite
-  sizeMultiplier: 10
+  selectedSprite: {fileID: 21300000, guid: 0cf03d74e8bf1ab40b6c80a75f79510d, type: 3}
   mapFullScreen: {fileID: 494789663}
-  mapFullScreenImage: {fileID: 1566705537}
   mapMini: {fileID: 232752151}
+  mapFullScreenImage: {fileID: 1566705537}
+  mapMiniImage: {fileID: 2059437553}
+  mapMiniRectTransform: {fileID: 2059437552}
+  mapIconSize: 10
+  minimapSize: .200000003
+  displayOnMapObjectList: []
 --- !u!4 &1167522879
 Transform:
   m_ObjectHideFlags: 0
@@ -4933,7 +4874,7 @@ GameObject:
   - 222: {fileID: 1566705538}
   - 114: {fileID: 1566705537}
   m_Layer: 5
-  m_Name: MapTexture
+  m_Name: FullScreenMapTexture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5690,7 +5631,7 @@ GameObject:
   - 222: {fileID: 2059437554}
   - 114: {fileID: 2059437553}
   m_Layer: 5
-  m_Name: MapTexture
+  m_Name: MiniMapTexture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
