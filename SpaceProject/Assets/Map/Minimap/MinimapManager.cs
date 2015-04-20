@@ -34,6 +34,8 @@ public class MinimapManager : MonoBehaviour
 	[SerializeField] public float minimapSize = 0.2f;
 
 	[HideInInspector] public List<DisplayOnMap> displayOnMapObjectList;
+	[HideInInspector] public List<Transform> mapObjectTransformList;
+	
 	private DisplayOnMap _selectedObject = null;
 
 	private RenderTexture _renderTexture;
@@ -90,26 +92,50 @@ public class MinimapManager : MonoBehaviour
 	public void OnClickMinimap(Vector2 clickPosition)
 	{
 
-		print("OnClickMinimap = " + clickPosition);
-		LayerMask layerMask = 1 << LayerMask.NameToLayer (StaticVariables.mapSpriteLayerName);
-		RaycastHit hit;            
-		Ray ray = _mapCamera.ScreenPointToRay(new Vector3(clickPosition.x, clickPosition.y, 0));
-		print(Input.mousePosition);
+		Vector3 worldClickPoint = _mapCamera.ScreenToWorldPoint(Input.mousePosition);
+		foreach(Transform tr in mapObjectTransformList)
+		{ 
 
-		if (Physics.Raycast(ray, out hit, 1000f, layerMask)) 
-		{
-			DisplayOnMap objectDisplayOnMap = hit.collider.gameObject.GetComponentInParent<DisplayOnMap>();
-			if(objectDisplayOnMap != null)
+			Vector3 currentPosition = new Vector3(tr.position.x, 0, tr.position.z);
+			worldClickPoint = new Vector3(worldClickPoint.x, 0, worldClickPoint.z);
+			if((currentPosition - worldClickPoint).sqrMagnitude < mapIconSize)
 			{
-				if(_selectedObject != null)
+				DisplayOnMap objectDisplayOnMap =  tr.GetComponent<DisplayOnMap>();
+				if(objectDisplayOnMap != null)
 				{
-					_selectedObject.SetSelected(false);
+					if(_selectedObject != null)
+					{
+						_selectedObject.SetSelected(false);
+					}
+					objectDisplayOnMap.SetSelected(true);
+					_selectedObject = objectDisplayOnMap;
 				}
-				_selectedObject = objectDisplayOnMap;
-				_selectedObject.SetSelected(true);
-				print (objectDisplayOnMap.type.ToString());
 			}
 		}
+
+
+
+////		print("OnClickMinimap = " + clickPosition);
+//		LayerMask layerMask = 1 << LayerMask.NameToLayer (StaticVariables.mapSpriteLayerName);
+//		RaycastHit hit;            
+//		Ray ray = _mapCamera.ScreenPointToRay(new Vector3(clickPosition.x, clickPosition.y, 0));
+//
+////		print(Input.mousePosition);
+//
+//		if (Physics.Raycast(ray, out hit, 1000f, layerMask)) 
+//		{
+//			DisplayOnMap objectDisplayOnMap = hit.collider.gameObject.GetComponentInParent<DisplayOnMap>();
+//			if(objectDisplayOnMap != null)
+//			{
+//				if(_selectedObject != null)
+//				{
+//					_selectedObject.SetSelected(false);
+//				}
+//				_selectedObject = objectDisplayOnMap;
+//				_selectedObject.SetSelected(true);
+//				print (objectDisplayOnMap.type.ToString());
+//			}
+//		}
 
 	}
 

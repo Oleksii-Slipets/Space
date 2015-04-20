@@ -31,7 +31,7 @@ public class MapLayers
 		tagManager.ApplyModifiedProperties();
 
 		int mapSpriteLayer = LayerMask.NameToLayer(mapSpriteLayerName);
-		for( int i = 8; i <= 31; i++)
+		for( int i = 0; i <= 31; i++)
 		{
 			Physics.IgnoreLayerCollision(mapSpriteLayer, i);
 		}
