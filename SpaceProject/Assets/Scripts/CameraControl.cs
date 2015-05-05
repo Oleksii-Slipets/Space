@@ -30,22 +30,22 @@ public class CameraControl : MonoBehaviour
 		float scrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
 		if(scrollWheelDelta != 0)
 		{
-			if(camera.isOrthoGraphic)
+			if(GetComponent<Camera>().orthographic)
 			{
 				
-				float tempOrthographicSize = camera.orthographicSize;
+				float tempOrthographicSize = GetComponent<Camera>().orthographicSize;
 				tempOrthographicSize -= wheelSpeed * scrollWheelDelta;
 				tempOrthographicSize = Mathf.Clamp(tempOrthographicSize, minOrthographicSize, maxOrthographicSize);
-				camera.orthographicSize = tempOrthographicSize;
+				GetComponent<Camera>().orthographicSize = tempOrthographicSize;
 			}
 			else 
 			{
-				Vector3 tempPosition = camera.transform.position + transform.forward * wheelSpeed * scrollWheelDelta;
+				Vector3 tempPosition = GetComponent<Camera>().transform.position + transform.forward * wheelSpeed * scrollWheelDelta;
 				if(((scrollWheelDelta > 0)&&(tempPosition.y < minHigh))|| ((scrollWheelDelta < 0)&&(tempPosition.y > maxHigh)))
 				{
 					return;
 				}
-				camera.transform.position = tempPosition;
+				GetComponent<Camera>().transform.position = tempPosition;
 
 				
 			}

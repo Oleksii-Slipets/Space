@@ -2,89 +2,99 @@
 using System.Collections;
 using System.Linq;
 
-public class DisplayOnMap : MonoBehaviour 
+namespace MapNamespace
 {
-	[SerializeField] public MinimapManager.MinimapObjectType type;
-
-	private MinimapManager _minimapManager;
-
-	private GameObject _iconObject;
-	private GameObject _selectedSpriteObject;
-
-	private Transform _transform;
-
-	private void Awake()
+	public class DisplayOnMap : MonoBehaviour 
 	{
-		_transform = transform;
-	}
+		[SerializeField] public MinimapManager.MinimapObjectType type;
 
-	private void Start () 
-	{
-		 _minimapManager = MinimapManager.GetInstance();
+		private MinimapManager _minimapManager;
 
-		if(_minimapManager != null)
+		private GameObject _iconObject;
+		private GameObject _selectedSpriteObject;
+
+		private Transform _transform;
+
+		private void Awake()
 		{
-			_iconObject = CreateMapSprite("MapIcon", _minimapManager.mapObjectList.Find(f => f.type == type).sprite);
-//			_iconObject.AddComponent<SphereCollider>().isTrigger = true;
-
-			_minimapManager.displayOnMapObjectList.Add(this);
-			_minimapManager.mapObjectTransformList.Add(transform);
+			_transform = transform;
 		}
 
-	}
-
-	private GameObject CreateMapSprite(string name, Sprite sprite)
-	{
-		GameObject mapSpriteObject = new GameObject(name);
-		Transform tr = mapSpriteObject.transform;
-
-		tr.position = _transform.position;
-		tr.rotation = _transform.rotation;
-		tr.Rotate(90, 0, 0);
-		tr.SetParent(_transform);
-
-		mapSpriteObject.AddComponent<SpriteRenderer>().sprite = sprite;
-		mapSpriteObject.layer = LayerMask.NameToLayer(StaticVariables.mapSpriteLayerName);
-
-		tr.localScale = Vector3.one * _minimapManager.mapIconSize;
-
-		return mapSpriteObject;
-	}
-
-	public void SetSelected(bool isSelected)
-	{
-		if(isSelected)
+		private void Start () 
 		{
-			if(_selectedSpriteObject == null)
+			 _minimapManager = MinimapManager.GetInstance();
+
+			if(_minimapManager != null)
 			{
-				_selectedSpriteObject = CreateMapSprite("MapSelectedIcon", _minimapManager.selectedSprite);
-				_selectedSpriteObject.transform.SetParent(_iconObject.transform);
+				_iconObject = CreateMapSprite("MapIcon", _minimapManager.mapObjectList.Find(f => f.type == type).sprite);
+	//			_iconObject.AddComponent<SphereCollider>().isTrigger = true;
+
+				_minimapManager.displayOnMapObjectList.Add(this);
+				_minimapManager.mapObjectTransformList.Add(transform);
+				_minimapManager.mapSpriteTransformList.Add(_iconObject.transform);
 			}
 
 		}
-		else
+
+		private GameObject CreateMapSprite(string name, Sprite sprite)
 		{
-			if(_selectedSpriteObject != null)
+			GameObject mapSpriteObject = new GameObject(name);
+			Transform tr = mapSpriteObject.transform;
+
+			tr.position = _transform.position;
+			tr.rotation = _transform.rotation;
+			tr.Rotate(90, 0, 0);
+	//		tr.SetParent(_transform);
+
+			mapSpriteObject.AddComponent<SpriteRenderer>().sprite = sprite;
+			mapSpriteObject.layer = LayerMask.NameToLayer(StaticVariables.mapSpriteLayerName);
+
+			tr.localScale = Vector3.one * _minimapManager.mapIconSize;
+
+			return mapSpriteObject;
+		}
+
+		public void SetSelected(bool isSelected)
+		{
+			if(isSelected)
 			{
-				Destroy(_selectedSpriteObject);
+				if(_selectedSpriteObject == null)
+				{
+					_selectedSpriteObject = CreateMapSprite("MapSelectedIcon", _minimapManager.selectedSprite);
+					_selectedSpriteObject.transform.SetParent(_iconObject.transform);
+				}
+
+			}
+			else
+			{
+				if(_selectedSpriteObject != null)
+				{
+					Destroy(_selectedSpriteObject);
+				}
+
+			}
+		}
+
+		public void SetIconSize(int newSize)
+		{
+			_iconObject.transform.localScale = Vector3.one * newSize;
+			_selectedSpriteObject.transform.localScale = Vector3.one * newSize;
+		}
+
+		private void OnDestroy()
+		{
+			if(_minimapManager != null)
+			{
+				_minimapManager.displayOnMapObjectList.Remove(this);
+				_minimapManager.mapObjectTransformList.Remove(transform);
+				if(_iconObject != null)
+				{
+					_minimapManager.mapSpriteTransformList.Remove(_iconObject.transform);
+				}
+
+				Destroy(_iconObject);
 			}
 
 		}
-	}
-
-	public void SetIconSize(int newSize)
-	{
-		_iconObject.transform.localScale = Vector3.one * newSize;
-		_selectedSpriteObject.transform.localScale = Vector3.one * newSize;
-	}
-
-	private void OnDestroy()
-	{
-		if(_minimapManager != null)
-		{
-			_minimapManager.displayOnMapObjectList.Remove(this);
-			_minimapManager.mapObjectTransformList.Remove(transform);
-		}
-
 	}
 }

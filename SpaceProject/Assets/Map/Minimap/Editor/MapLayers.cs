@@ -2,39 +2,42 @@
 using System.Collections;
 using UnityEditor;
 
-[InitializeOnLoad]
-public class MapLayers
+namespace MapNamespace
 {
-	static MapLayers()
+	[InitializeOnLoad]
+	public class MapLayers
 	{
-		CreateLayer();
-	}
-
-	static void CreateLayer()
-	{
-		string mapSpriteLayerName = StaticVariables.mapSpriteLayerName;
-
-		SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
-		
-		SerializedProperty it = tagManager.GetIterator();
-
-		bool showChildren = true;
-		while (it.NextVisible(showChildren))
+		static MapLayers()
 		{
-			if (it.name.Contains("User Layer") && (it.stringValue == "" || it.stringValue == mapSpriteLayerName ))
+			CreateLayer();
+		}
+
+		static void CreateLayer()
+		{
+			string mapSpriteLayerName = StaticVariables.mapSpriteLayerName;
+
+			SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
+			
+			SerializedProperty it = tagManager.GetIterator();
+
+			bool showChildren = true;
+			while (it.NextVisible(showChildren))
 			{
+				if (it.name.Contains("User Layer") && (it.stringValue == "" || it.stringValue == mapSpriteLayerName ))
+				{
 
-				it.stringValue = mapSpriteLayerName;
-				break;
+					it.stringValue = mapSpriteLayerName;
+					break;
+				}
 			}
-		}
-		tagManager.ApplyModifiedProperties();
+			tagManager.ApplyModifiedProperties();
 
-		int mapSpriteLayer = LayerMask.NameToLayer(mapSpriteLayerName);
-		for( int i = 0; i <= 31; i++)
-		{
-			Physics.IgnoreLayerCollision(mapSpriteLayer, i);
-		}
+			int mapSpriteLayer = LayerMask.NameToLayer(mapSpriteLayerName);
+			for( int i = 0; i <= 31; i++)
+			{
+				Physics.IgnoreLayerCollision(mapSpriteLayer, i);
+			}
 
+		}
 	}
 }

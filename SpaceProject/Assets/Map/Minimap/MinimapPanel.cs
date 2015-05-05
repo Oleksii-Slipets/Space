@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MinimapPanel : MonoBehaviour, IPointerClickHandler
+namespace MapNamespace
 {
-	public void OnPointerClick(PointerEventData data)
+	public class MinimapPanel : MonoBehaviour, IPointerClickHandler
 	{
-		MinimapManager.GetInstance().OnClickMinimap(data.position);
+		public void OnPointerClick(PointerEventData data)
+		{
+			MinimapManager.GetInstance().OnClickMinimap(data.position);
+		}
 	}
 }

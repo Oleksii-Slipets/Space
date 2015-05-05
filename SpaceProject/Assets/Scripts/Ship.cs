@@ -20,9 +20,37 @@ public class Ship : MonoBehaviour
 	
 	private bool _isSelected = false;
 
+	// --------------------------------------------------------------------
+	PotentialField m_field;
+
+	void init()
+	{
+		m_field = new PotentialField (this);
+	}
+	[Range(0.01f, 100.0f)]
+	public float fieldRadius = 20.0f;
+	public float CurrentSpeed
+	{
+		get { return _movingSpeed; }
+	}
+	
+	public float TargetSpeed
+	{
+		get { return _maxMovingSpeed; }
+
+	}
+	
+	public float acceleration = 0.2f;
+	protected Vector3 direction = Vector3.forward;
+	public void LookAt(Vector3 vector_forward)
+	{
+		direction = vector_forward.normalized;
+	}
+	// --------------------------------------------------------------------
 	
 	private void Start()
 	{
+	init();
 		SetSelected(false);
 	}
 
@@ -57,29 +85,32 @@ public class Ship : MonoBehaviour
 		if(_currentState == State.Stay)
 		{
 
-			_movingSpeed = Mathf.Lerp(_movingSpeed, 0, 0.2f);
-			_rotationSpeed = Mathf.Lerp(_rotationSpeed, 0, 0.2f);
+			_movingSpeed = Mathf.Lerp(_movingSpeed, 0, acceleration);
+			_rotationSpeed = Mathf.Lerp(_rotationSpeed, 0, acceleration);
 
-			rigidbody.velocity = Vector3.zero;
+			GetComponent<Rigidbody>().velocity = Vector3.zero;
 		}
 		else if(_targetTransform != null)
 		{
-
-			_rotationSpeed = Mathf.Lerp(_rotationSpeed, _maxRotationSpeed, 0.1f);
+//			m_field.target_position = _targetTransform.position;
+//			m_field.DoUpdate();
+			_rotationSpeed = Mathf.Lerp(_rotationSpeed, _maxRotationSpeed, acceleration);
 
 			direction = (_targetTransform.position - transform.position);
 			targetRotation = Quaternion.LookRotation(direction);
-			_movingSpeed = Mathf.Lerp(_movingSpeed, _maxMovingSpeed, 0.1f);
+			_movingSpeed = Mathf.Lerp(_movingSpeed, _maxMovingSpeed, acceleration);
 
 			if (IsCanReachToTarget(_targetTransform.position, 1))
 			{
 				SetState(State.Stay);
 			}
 		}
+		
+		
 
-		rigidbody.MoveRotation(Quaternion.RotateTowards(rigidbody.rotation, targetRotation, _rotationSpeed * _commonSpeed));
+		GetComponent<Rigidbody>().MoveRotation(Quaternion.RotateTowards(GetComponent<Rigidbody>().rotation, targetRotation, _rotationSpeed * _commonSpeed));
 
-		rigidbody.MovePosition(rigidbody.position + transform.forward * _movingSpeed * _commonSpeed * Time.deltaTime);
+		GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + transform.forward * _movingSpeed * _commonSpeed * Time.deltaTime);
 		
 	}
 

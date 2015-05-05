@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class StaticVariables
+namespace MapNamespace
 {
-	
-	public static string mapSpriteLayerName = "MapSprite";
+	public static class StaticVariables
+	{
+		
+		public static string mapSpriteLayerName = "MapSprite";
 
+	}
 }

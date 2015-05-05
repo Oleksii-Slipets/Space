@@ -246,6 +246,7 @@ MonoBehaviour:
   - type: 1
     sprite: {fileID: 21300000, guid: e845e43f01c651c4ba7634d9f37a8deb, type: 3}
   selectedSprite: {fileID: 21300000, guid: 0cf03d74e8bf1ab40b6c80a75f79510d, type: 3}
+  mainCamera: {fileID: 0}
   mapFullScreen: {fileID: 145576}
   mapMini: {fileID: 145574}
   mapFullScreenImage: {fileID: 11445582}
@@ -254,6 +255,8 @@ MonoBehaviour:
   mapIconSize: 10
   minimapSize: .200000003
   displayOnMapObjectList: []
+  mapObjectTransformList: []
+  mapSpriteTransformList: []
 --- !u!222 &22245572
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -402,4 +405,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 145572}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

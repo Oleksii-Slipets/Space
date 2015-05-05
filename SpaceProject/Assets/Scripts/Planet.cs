@@ -8,7 +8,7 @@ public class Planet : MonoBehaviour
 	private void OnTriggerStay(Collider otherCollider)
 	{
 		Vector3 direction = (transform.position - otherCollider.transform.position).normalized;
-		otherCollider.rigidbody.MovePosition(otherCollider.transform.position + direction * _gravity * Time.deltaTime);
+		otherCollider.GetComponent<Rigidbody>().MovePosition(otherCollider.transform.position + direction * _gravity * Time.deltaTime);
 	}
 
 }

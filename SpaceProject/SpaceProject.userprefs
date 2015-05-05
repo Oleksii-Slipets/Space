@@ -1,9 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Map\Minimap\MinimapManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\GitRepos\SolarWind2\SolarWind2\SolarWind2\Assets\Map\Minimap\Editor\MapLayers.cs">
     <Files>
-      <File FileName="Assets\Map\Minimap\DisplayOnMap.cs" Line="1" Column="1" />
-      <File FileName="Assets\Map\Minimap\MinimapManager.cs" Line="101" Column="70" />
+      <File FileName="..\..\..\GitRepos\SolarWind2\SolarWind2\SolarWind2\Assets\Map\Minimap\Editor\MapLayers.cs" Line="42" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
